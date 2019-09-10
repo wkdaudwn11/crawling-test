@@ -1,8 +1,9 @@
 var request = require('request');
+const client = require('cheerio-httpcli');
 
 export const home = (req, res) => {
   const url =
-    'https://play.google.com/store/apps/details?id=com.bluestonesoft.soularkglobal&hl=ko&showAllReviews=true';
+    'https://play.google.com/store/apps/details?id=com.bluestonesoft.soularkglobal&hl=ko&showAllReviews=false';
 
   request(
     {
@@ -12,9 +13,28 @@ export const home = (req, res) => {
     },
     function(error, response, body) {
       if (error) throw error;
-      console.log(body);
+      console.log(JSON.stringify(response));
     }
   );
 
-  res.send('test');
+  res.send('home');
+};
+
+export const home2 = (req, res) => {
+  let url =
+    'https://play.google.com/store/apps/details?id=com.bluestonesoft.soularkglobal&hl=ko';
+
+  var param = {};
+  client.fetch(url, param, function(err, $, res) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    $('.fle8Af').each(function(post) {
+      console.log($(this).text());
+    });
+    console.log('test');
+  });
+
+  https: res.send('home2');
 };
